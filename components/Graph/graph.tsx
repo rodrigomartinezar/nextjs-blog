@@ -18,7 +18,7 @@ function randomColor(index) {
 }
 
 const bars = props.data.map( (currentValue, index) => {
-  const color = randomColor(index+1);
+  const color = randomColor(currentValue);
   return (
   <rect
     key={currentValue}
