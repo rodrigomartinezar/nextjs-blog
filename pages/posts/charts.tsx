@@ -1,5 +1,4 @@
-import Graph from '../../components/graph'
-import Layout from '../../components/layout'
+import Graph from '../../components/Graph/graph'
 import Head from 'next/head'
 
 const GraphPost = () => {
