@@ -35,7 +35,6 @@ export default function Post({ postData }) {
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
-      <Graph data={[1,2,3,4]}/>
     </Layout>
   )
 }
