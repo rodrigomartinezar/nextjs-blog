@@ -22,11 +22,10 @@ const Graph = (props) => {
     // const color = randomColor(currentValue);
     return (
     <rect
-      key={currentValue}
       x={xScale(index+1)}
-      y={(yScale(currentValue)) - margin.bottom}
+      y={(yScale(currentValue))}
       width={xScale.bandwidth()}
-      height={500 - yScale(currentValue)}
+      height={500 - yScale(currentValue) - margin.bottom}
       fill={'red'}
     />
     )
