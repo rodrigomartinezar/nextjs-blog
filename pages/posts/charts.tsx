@@ -19,10 +19,6 @@ const GraphPost = () => {
         type='number'
         onPressEnter={updateDatos}
       />
-      {/* <p>{inputValue}</p> */}
-      {/* {datos.map(d => (
-        <p>{d}</p>
-      ))} */}
     </>
   )
 }
