@@ -44,6 +44,7 @@ const Graph = (props) => {
     d3.select(xAxis.current).call(xAxisGenerator)
   })
 
+  
     return (
       <div
         style={{textAlign:'center'}}
