@@ -5,6 +5,8 @@ const Graph = (props) => {
 
   const margin = {top:20, right: 5, bottom: 20, left:35}
   const length = props.data.length
+
+
   const xScale = d3.scaleBand()
     .domain(Array.from({length}, (v,k) => String(k+1)))
     .range([margin.left, 500-margin.right])
@@ -34,8 +36,8 @@ const Graph = (props) => {
   const yAxis = useRef()
   const xAxis = useRef()
 
-  const yAxisGenerator = d3.axisLeft().scale(yScale).tickFormat(d => `${d}W`)
-  const xAxisGenerator = d3.axisBottom().scale(xScale).tickFormat(d => `${d}H`)
+  const yAxisGenerator = d3.axisLeft(yAxis).scale(yScale).tickFormat(d => `${d}W`)
+  const xAxisGenerator = d3.axisBottom(xAxis).scale(xScale).tickFormat(d => `${d}H`)
 
   useEffect(() => {
     d3.select(yAxis.current).call(yAxisGenerator)
