@@ -23,8 +23,8 @@ const Graph = (props) => {
     return (
     <rect
       key={currentValue}
-      x={xScale(index)+margin.left}
-      y={(yScale(currentValue))}
+      x={xScale(index+1)}
+      y={(yScale(currentValue)) - margin.bottom}
       width={xScale.bandwidth()}
       height={500 - yScale(currentValue)}
       fill={'red'}
