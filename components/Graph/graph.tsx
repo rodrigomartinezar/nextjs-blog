@@ -3,14 +3,15 @@ import { useRef, useEffect } from 'react'
 
 const Graph = (props) => {
 
+  const margin = {top:20, right: 5, bottom: 20, left:35}
   const length = props.data.length
   const xScale = d3.scaleBand()
     .domain(Array.from({length}, (v,k) => String(k+1)))
-    .range([0, 500])
+    .range([margin.left, 500-margin.right])
 
   const yScale = d3.scaleLinear()
-    .domain([0, 100])
-    .range([0, 500])
+    .domain([0, 30])
+    .range([500-margin.bottom, margin.top])
 
   function randomColor(index) {
     let r = function () { return Math.floor(Math.random()*256*index) };
@@ -22,7 +23,7 @@ const Graph = (props) => {
     return (
     <rect
       key={currentValue}
-      x={xScale(length-index)}
+      x={xScale(index)+margin.left}
       y={(yScale(currentValue))}
       width={xScale.bandwidth()}
       height={500 - yScale(currentValue)}
@@ -31,11 +32,10 @@ const Graph = (props) => {
     )
   })
 
-  console.log(yScale.ticks())
-
   const yAxis = useRef()
+  const xAxis = useRef()
 
-  const yAxisGenerator = d3.axisLeft().scale(yScale)
+  const yAxisGenerator = d3.axisLeft().scale(yScale).tickFormat(d => `${d}W`)
 
   useEffect(() => {
     d3.select(yAxis.current).call(yAxisGenerator)
@@ -50,8 +50,13 @@ const Graph = (props) => {
         >
           {bars}
           <g>
-            {/* <g ref='xAxis' /> */}
-            <g ref={yAxis} />
+            <g
+              ref={xAxis}
+            />
+            <g
+              ref={yAxis}
+              transform={`translate (${margin.left} 0)`}
+            />
           </g>
         </svg>
       </div>
