@@ -36,9 +36,11 @@ const Graph = (props) => {
   const xAxis = useRef()
 
   const yAxisGenerator = d3.axisLeft().scale(yScale).tickFormat(d => `${d}W`)
+  const xAxisGenerator = d3.axisBottom().scale(xScale).tickFormat(d => `${d}H`)
 
   useEffect(() => {
     d3.select(yAxis.current).call(yAxisGenerator)
+    d3.select(xAxis.current).call(xAxisGenerator)
   })
 
     return (
@@ -52,6 +54,7 @@ const Graph = (props) => {
           <g>
             <g
               ref={xAxis}
+              transform={`translate (0, ${500 - margin.bottom})`}
             />
             <g
               ref={yAxis}
