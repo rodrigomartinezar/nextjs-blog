@@ -1,8 +1,8 @@
-import Graph from '../../components/Graph/graph'
+import BarChart from '../../components/Graph/barchart'
 import { useState, useEffect } from 'react'
 import { Input } from 'antd'
 
-const GraphPost = () => {
+const BarChartPost = () => {
   const [datos, setDatos] = useState([30,2,5,10])
   /* const [inputValue, setInputValue] = useState(0) */
 
@@ -14,7 +14,7 @@ const GraphPost = () => {
   return (
     <>
       <h1>Acá va el gráfico</h1>
-      <Graph data={datos}/>
+      <BarChart data={datos}/>
       <Input
         type='number'
         onPressEnter={updateDatos}
@@ -23,4 +23,4 @@ const GraphPost = () => {
   )
 }
 
-export default GraphPost
+export default BarChartPost

@@ -46,7 +46,13 @@ export default function Home({ allPostsData }) {
               className={utilStyles.listItem}
               key='bar-chart'
             >
-              <Link href="/posts/charts">Charts</Link>
+              <Link href="/posts/barchart">Bar Chart</Link>
+            </li>
+            <li
+              className={utilStyles.listItem}
+              key='spider-chart'
+            >
+              <Link href="/posts/spiderchart">Spider Chart</Link>
             </li>
         </ul>
       </section>

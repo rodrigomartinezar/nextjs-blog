@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { useRef, useEffect } from 'react'
 
-const Graph = (props) => {
+const BarChart = (props) => {
 
   const margin = {top:20, right: 5, bottom: 20, left:35}
   const length = props.data.length
@@ -11,10 +11,13 @@ const Graph = (props) => {
     .domain(Array.from({length}, (v,k) => String(k+1)))
     .range([margin.left, 500-margin.right])
 
+  const {data} = props
   const yScale = d3.scaleLinear()
-    .domain([0, 30])
+    .domain([0, Math.max(...data)])
     .range([500-margin.bottom, margin.top])
-
+  
+  
+  console.log(Math.max(...data))
   function randomColor(index) {
     let r = function () { return Math.floor(Math.random()*256*index) };
     return "rgb(" + r() + "," + r() + "," + r() + ")";
@@ -69,4 +72,4 @@ const Graph = (props) => {
     
 }
 
-export default Graph
+export default BarChart
