@@ -25,15 +25,16 @@ const SpiderChart = () => {
                   .startAngle(0)
                   .endAngle(Math.PI / 2)
 
+  d3.select(chartRef.current)
+    .append('path')
+    .attr("d", arc1)
+    .attr('fill', 'red')
+
     const arc2 = d3.arc()
                   .innerRadius(125)
                   .outerRadius(175)
                   .startAngle(0)
                   .endAngle(Math.PI / 2)
-    d3.select(chartRef.current)
-      .append('path')
-      .attr("d", arc1)
-      .attr('fill', 'red')
     
     d3.select(chartRef.current)
       .append('path')
