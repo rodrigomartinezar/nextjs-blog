@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
+import * as d3 from 'd3'
 
 
 const SpiderChart = () => {
@@ -13,6 +14,23 @@ const SpiderChart = () => {
 
   const arcRef = useRef()
 
+  function innerRadiusCalculation (d, i) {
+    return innerRadius + Math.floor(i/numSegments) * segmentHeight
+  }
+
+  useEffect(() => {
+    const arc = d3.arc()
+                  .innerRadius(50)
+                  .outerRadius(100)
+                  .startAngle(0)
+                  .endAngle(Math.PI / 2)
+
+    d3.select(arcRef.current)
+      .attr("d", arc)
+      .attr('fill', 'red')
+      //.attr(`transform, translate(${500-40/2}, ${500-40/2})`)
+  })
+
   return (
     <>
       <h1>Acá va el gráfico</h1>
@@ -22,11 +40,17 @@ const SpiderChart = () => {
         <svg
           height={500} width={500}
         >
-          <g>
+          <g
+            transform={
+              `translate(
+                ${(500 - (margin.left + margin.right))/2},
+                ${230})`
+              }
+          >
             <path
               ref={arcRef}
             >
-
+              hgola
             </path>
           </g>
         </svg>
