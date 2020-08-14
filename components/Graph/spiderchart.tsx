@@ -12,21 +12,32 @@ const SpiderChart = () => {
   let radialLabels = 50
   let segmentLabels = 50
 
-  const arcRef = useRef()
+  const chartRef = useRef()
 
   function innerRadiusCalculation (d, i) {
     return innerRadius + Math.floor(i/numSegments) * segmentHeight
   }
 
   useEffect(() => {
-    const arc = d3.arc()
+    const arc1 = d3.arc()
                   .innerRadius(50)
                   .outerRadius(100)
                   .startAngle(0)
                   .endAngle(Math.PI / 2)
 
-    d3.select(arcRef.current)
-      .attr("d", arc)
+    const arc2 = d3.arc()
+                  .innerRadius(125)
+                  .outerRadius(175)
+                  .startAngle(0)
+                  .endAngle(Math.PI / 2)
+    d3.select(chartRef.current)
+      .append('path')
+      .attr("d", arc1)
+      .attr('fill', 'red')
+    
+    d3.select(chartRef.current)
+      .append('path')
+      .attr("d", arc2)
       .attr('fill', 'red')
       //.attr(`transform, translate(${500-40/2}, ${500-40/2})`)
   })
@@ -41,17 +52,13 @@ const SpiderChart = () => {
           height={500} width={500}
         >
           <g
+            ref={chartRef}
             transform={
               `translate(
                 ${(500 - (margin.left + margin.right))/2},
                 ${230})`
               }
           >
-            <path
-              ref={arcRef}
-            >
-              hgola
-            </path>
           </g>
         </svg>
       </div>
