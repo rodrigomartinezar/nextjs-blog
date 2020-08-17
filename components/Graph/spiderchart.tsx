@@ -12,6 +12,7 @@ const SpiderChart = (props) => {
   let segmentHeight = 50
   let radialLabels = 50
   let segmentLabels = 50
+  const padding = 35
 
   const chartRef = useRef()
 
@@ -22,8 +23,8 @@ const SpiderChart = (props) => {
   useEffect(() => {
     for (let i = 0; i<number_of_levels; i++){
       const arc1 = d3.arc()
-                    .innerRadius(50 + 45*i)
-                    .outerRadius(75 + 45*i)
+                    .innerRadius(50 + padding*i)
+                    .outerRadius(75 + padding*i)
                     .startAngle(0)
                     .endAngle(Math.PI / 2)
 
