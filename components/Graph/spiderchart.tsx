@@ -20,18 +20,19 @@ const SpiderChart = (props) => {
   }
 
   useEffect(() => {
-    const arc1 = d3.arc()
-                  .innerRadius(50)
-                  .outerRadius(100)
-                  .startAngle(0)
-                  .endAngle(Math.PI / 2)
+    for (let i = 0; i<number_of_levels; i++){
+      const arc1 = d3.arc()
+                    .innerRadius(50 + 45*i)
+                    .outerRadius(75 + 45*i)
+                    .startAngle(0)
+                    .endAngle(Math.PI / 2)
 
-  d3.select(chartRef.current)
-    .append('path')
-    .attr("d", arc1)
-    .attr('fill', 'red')
-
-    const arc2 = d3.arc()
+      d3.select(chartRef.current)
+        .append('path')
+        .attr("d", arc1)
+        .attr('fill', 'red')
+    }
+    /* const arc2 = d3.arc()
                   .innerRadius(125)
                   .outerRadius(175)
                   .startAngle(0)
@@ -40,7 +41,7 @@ const SpiderChart = (props) => {
     d3.select(chartRef.current)
       .append('path')
       .attr("d", arc2)
-      .attr('fill', 'red')
+      .attr('fill', 'red') */
       //.attr(`transform, translate(${500-40/2}, ${500-40/2})`)
   })
 
