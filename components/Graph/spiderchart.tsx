@@ -19,6 +19,12 @@ const SpiderChart = (props) => {
     3: '#6D03D7'
   }
 
+  function between(min, max){
+    return Math.floor(
+      Math.random() * (max-min) + min
+    )
+  }
+
   useEffect(() => {
     for (let j = 1; j<number_of_segments+1; j++){
       for (let i = 0; i<number_of_levels; i++){
@@ -31,7 +37,7 @@ const SpiderChart = (props) => {
         d3.select(chartRef.current)
           .append('path')
           .attr("d", arc1)
-          .attr('fill', colorArray[i])
+          .attr('fill', colorArray[between(1,4)])
       }
     }
     /* const arc2 = d3.arc()
