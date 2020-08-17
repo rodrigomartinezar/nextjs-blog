@@ -7,8 +7,10 @@ const SpiderChart = (props) => {
   const margin = {top:20, right:20, bottom:20, left:20}
 
   const {number_of_levels} = props
+  const number_of_segments = 3
   const padding = 35
-
+  const angle = Math.PI/4
+  const padding_between_segments = 2
   const chartRef = useRef()
 
   const colorArray = {
@@ -18,17 +20,19 @@ const SpiderChart = (props) => {
   }
 
   useEffect(() => {
-    for (let i = 0; i<number_of_levels; i++){
-      const arc1 = d3.arc()
-                    .innerRadius(50 + padding*i)
-                    .outerRadius(75 + padding*i)
-                    .startAngle(0)
-                    .endAngle(Math.PI / 2)
+    for (let j = 1; j<number_of_segments+1; j++){
+      for (let i = 0; i<number_of_levels; i++){
+        const arc1 = d3.arc()
+                      .innerRadius(50 + padding*i)
+                      .outerRadius(80 + padding*i)
+                      .startAngle(angle*(j-1))
+                      .endAngle(angle*j)
 
-      d3.select(chartRef.current)
-        .append('path')
-        .attr("d", arc1)
-        .attr('fill', colorArray[i])
+        d3.select(chartRef.current)
+          .append('path')
+          .attr("d", arc1)
+          .attr('fill', colorArray[i])
+      }
     }
     /* const arc2 = d3.arc()
                   .innerRadius(125)
