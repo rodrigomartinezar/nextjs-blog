@@ -7,11 +7,6 @@ const SpiderChart = (props) => {
   const margin = {top:20, right:20, bottom:20, left:20}
 
   const {number_of_levels} = props
-  let innerRadius = 50
-  let numSegments = 50
-  let segmentHeight = 50
-  let radialLabels = 50
-  let segmentLabels = 50
   const padding = 35
 
   const chartRef = useRef()
