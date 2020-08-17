@@ -16,9 +16,6 @@ const SpiderChart = (props) => {
 
   const chartRef = useRef()
 
-  function innerRadiusCalculation (d, i) {
-    return innerRadius + Math.floor(i/numSegments) * segmentHeight
-  }
 
   useEffect(() => {
     for (let i = 0; i<number_of_levels; i++){
