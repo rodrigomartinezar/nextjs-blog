@@ -1,1 +1,2 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+Este proyecto está basado en el tutorial de nextjs. El template fue aprovechado para generar un skills-map-chart en una de las secciones.
+![Ejemplo resultado de mapa de habilidades](./docs/images/skill-map-example.png)
