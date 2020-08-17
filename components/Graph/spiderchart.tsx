@@ -16,6 +16,11 @@ const SpiderChart = (props) => {
 
   const chartRef = useRef()
 
+  const colorArray = {
+    1: '#41D38C',
+    2: '#2EAB6D',
+    3: '#6D03D7'
+  }
 
   useEffect(() => {
     for (let i = 0; i<number_of_levels; i++){
@@ -28,7 +33,7 @@ const SpiderChart = (props) => {
       d3.select(chartRef.current)
         .append('path')
         .attr("d", arc1)
-        .attr('fill', 'red')
+        .attr('fill', colorArray[i])
     }
     /* const arc2 = d3.arc()
                   .innerRadius(125)
