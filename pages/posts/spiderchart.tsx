@@ -1,7 +1,9 @@
 import SpiderChart from '../../components/Graph/spiderchart'
 
 const SpiderChartPost = () => {
-  return <SpiderChart />
+  let levels = 4
+
+  return <SpiderChart number_of_levels={levels}/>
 }
 
 export default SpiderChartPost;
