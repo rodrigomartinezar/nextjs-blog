@@ -10,7 +10,7 @@ const SpiderChart = (props) => {
   const number_of_segments = 11
   const padding = 35
   const angle = (2*Math.PI) / number_of_segments
-  //const padding_between_segments = Math.PI/90
+  const padding_between_segments = Math.PI/90
   const chartRef = useRef()
 
   const colorArray = {
@@ -31,8 +31,8 @@ const SpiderChart = (props) => {
         const arc1 = d3.arc()
                       .innerRadius(50 + padding*i)
                       .outerRadius(80 + padding*i)
-                      .startAngle(angle*(j-1))
-                      .endAngle(angle*j)
+                      .startAngle(angle*(j-1) + padding_between_segments)
+                      .endAngle(angle*j - padding_between_segments)
 
         d3.select(chartRef.current)
           .append('path')
