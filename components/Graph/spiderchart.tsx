@@ -7,10 +7,10 @@ const SpiderChart = (props) => {
   const margin = {top:20, right:20, bottom:20, left:20}
 
   const {number_of_levels} = props
-  const number_of_segments = 3
+  const number_of_segments = 11
   const padding = 35
-  const angle = Math.PI/4
-  const padding_between_segments = 2
+  const angle = (2*Math.PI) / number_of_segments
+  //const padding_between_segments = Math.PI/90
   const chartRef = useRef()
 
   const colorArray = {
