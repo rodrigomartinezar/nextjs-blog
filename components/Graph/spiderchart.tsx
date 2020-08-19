@@ -23,12 +23,6 @@ const SpiderChart = (props) => {
     5: '#28024E'
   }
 
-  function between(min, max){
-    return Math.floor(
-      Math.random() * (max-min) + min
-    )
-  }
-
   useEffect(() => {
     for (let j = 1; j<number_of_segments+1; j++){
       for (let i = 0; i<number_of_levels; i++){
