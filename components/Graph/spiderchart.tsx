@@ -38,17 +38,6 @@ const SpiderChart = (props) => {
           .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
       }
     }
-    /* const arc2 = d3.arc()
-                  .innerRadius(125)
-                  .outerRadius(175)
-                  .startAngle(0)
-                  .endAngle(Math.PI / 2)
-    
-    d3.select(chartRef.current)
-      .append('path')
-      .attr("d", arc2)
-      .attr('fill', 'red') */
-      //.attr(`transform, translate(${500-40/2}, ${500-40/2})`)
   })
 
   return (
