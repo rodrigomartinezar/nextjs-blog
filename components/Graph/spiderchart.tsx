@@ -4,8 +4,6 @@ import * as d3 from 'd3'
 
 const SpiderChart = (props) => {
   
-  const margin = {top:20, right:20, bottom:20, left:20}
-
   const {formData} = props
   const number_of_segments = Object.keys(formData).length
   const number_of_levels = formData['Internet'].length
