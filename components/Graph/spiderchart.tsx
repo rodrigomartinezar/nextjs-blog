@@ -47,14 +47,14 @@ const SpiderChart = (props) => {
         style={{textAlign:'center'}}
       >
         <svg
-          height={500} width={500}
+          height={700} width={700}
         >
           <g
             ref={chartRef}
             transform={
               `translate(
-                ${(500 - (margin.left + margin.right))/2},
-                ${230})`
+                ${(700 - (margin.left + margin.right))/2},
+                ${330})`
               }
           >
           </g>
