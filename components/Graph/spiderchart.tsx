@@ -38,7 +38,7 @@ const SpiderChart = (props) => {
         .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
 
         if (i == number_of_levels-1){
-          let outerArc
+          let outerArc: any
           if (angle*(j-1) + padding_between_segments < Math.PI/180 * 90 || angle*(j-1) + padding_between_segments > Math.PI/180 * 260 ){
             outerArc = d3.arc()
                         .innerRadius(105 + padding*i)
