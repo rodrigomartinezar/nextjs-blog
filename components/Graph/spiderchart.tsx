@@ -39,8 +39,8 @@ const SpiderChart = (props) => {
 
         if (i == number_of_levels-1){                      
           const outerArc = d3.arc()
-                              .innerRadius(100 + padding*i)
-                              .outerRadius(100 + padding*i)
+                              .innerRadius(105 + padding*i)
+                              .outerRadius(105 + padding*i)
                               .startAngle(angle*(j-1) + padding_between_segments)
                               .endAngle(angle*j - padding_between_segments)
           
