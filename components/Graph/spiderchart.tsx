@@ -4,14 +4,50 @@ import * as d3 from 'd3'
 
 const SpiderChart = (props) => {
   
+  /*
+  formData is an key:value Object received from parent Component, where
+  the 'key' is the skill as a string and the 'value' is an array of
+  numbers. It contains the data to be visualized
+  */
   const {formData} = props
+  /*
+  number_of_segments is the number of sections that the skills-map must
+  have. It is calculated as the length of the 'formData' variable.
+  */
   const number_of_segments = Object.keys(formData).length
+  /*
+  number_of_levels is the amount of levels associated to every segment.
+  It is calculated from the length of the array of the first item in
+  'formData'. This assumes that every skill has the same amount of levels.
+  TODO: What happens if the skills don't have the same amount of levels?
+  */
   const number_of_levels = formData['Internet'].length
+  /*
+  padding is the separation between every level on each segment
+  */
   const padding = 55
+  /*
+  angle is the result of 360° (2*Math.PI) divided by 'number_of_segments'
+  The result is the number of degrees every segment must have.
+  */
   const angle = (2*Math.PI) / number_of_segments
+  /*
+  padding_between_segments is the separation between segments. Corresponds
+  to 1° and it's used both to the right and the left side of the segment.
+  */
   const padding_between_segments = Math.PI/90
+  /*
+  chartRef is a useRef hook used to manage the conflict between react and
+  d3 on their pursue of controling the DOM. First, react renders the
+  components and chartRef is used to reference the <g> component, in which
+  the chart is generated.
+  */
   const chartRef = useRef()
 
+  /*
+  colorArray is an key:value Object. The color of the level is defined
+  according to the number associated to said level
+  */
   const colorArray = {
     0: '#C0C0C0',
     1: '#41D38C',
@@ -21,6 +57,39 @@ const SpiderChart = (props) => {
     5: '#28024E'
   }
 
+  /*
+  Here, the magic happens (i'm not entirely certain of what happens in
+  this section, so it may need some refactor to make it efficient)
+
+  As React and D3 both want to control the DOM, an useEffect Hook is
+  needed in order to tell React to re-render the component. In this way,
+  first the components are generated (div, svg, g) and <g> is associated
+  to the chartRef hook.
+
+  Then, a re-render is triggered (why is it triggered?) and the code
+  inside the useEffect hook is executed. The re-render is necessary,
+  otherwise it would be imposible to use d3 to select something that
+  doesn't exist.
+
+  The first loop (j) iterates from 1 to number_of_segments+1. It's used to
+  'iterate over the segments'. The +1 is for further calculations.
+
+  The second loop (i) iterates from 0 to number_of_levels. It's used to
+  'iterate over the levels'.
+
+  startAngle is the angle that every segment has +padding_between_segments
+  The multiplication by (j-1) is necessary in order to, on each iteration,
+  move the starting angle of the arc.
+  In the case of 'endAngle', the same calculation is made, but
+  -padding_between_segments. This results in an arc that has an angle of
+  angle - 2*padding_between_segments (the start angle is forwarded by 
+  padding_between_segments and the end angle is pulled back by
+  padding_between_segments).
+
+  An d3 arc component is generated, using the angles calculated before,
+  and radius defined by a constan + padding*i, which separates the arcs
+  while the level changes.
+  */
   useEffect(() => {
     for (let j = 1; j<number_of_segments+1; j++){
       for (let i = 0; i<number_of_levels; i++){
@@ -32,15 +101,43 @@ const SpiderChart = (props) => {
                       .startAngle(startAngle)
                       .endAngle(endAngle)
 
+        /*
+        using the chartRef hook, the <g> component is selected and the
+        prior generated arc is appended, filling it with the corresponding
+        color
+        */
         d3.select(chartRef.current)
         .append('path')
         .attr("d", arc)
         .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
 
+        /*
+        This condition is used to place the labels. In order to do this,
+        an invisible curve must be generated at the end of every segment,
+        thus, the curve must be generated on the last iteration of the
+        second loop
+        */
         if (i == number_of_levels-1){
+          /*
+          outerArc is defined as type any. This will be the outer curve.
+
+          rightTopLimit and leftTopLimit are the limits of the top half
+          of the chart in degrees. This is used to turn the bottom labels
+          to make them readable
+
+          The angles start at the top part of the screen. In normal
+          cartesian plane, 90°. That's the reason of the limits being
+          'unusual'
+          */
           let outerArc: any
           const rightTopLimit = Math.PI/180 * 90
           const leftTopLimit = Math.PI/180 * 260
+          /*
+          If the arc is in the upper half of the chart, outerArc is a
+          normal arc
+          The radius constant is greater than normal case for visual
+          reasons (otherwise, the label it's placed to close to the chart)
+          */
           if (startAngle < rightTopLimit || startAngle > leftTopLimit ){
             outerArc = d3.arc()
                         .innerRadius(105 + padding*i)
@@ -48,12 +145,25 @@ const SpiderChart = (props) => {
                         .startAngle(startAngle)
                         .endAngle(endAngle)
           } else {
+            /*
+            If the arc is in the bottom half of the chart, outerArc is
+            drawn backwards.
+            The radius constant is greater than prior case for visual
+            reasons
+            */
             outerArc = d3.arc()
                         .innerRadius(120 + padding*i)
                         .outerRadius(120 + padding*i)
                         .startAngle(endAngle)
                         .endAngle(startAngle)
           }
+          /*
+          The <g> component is selected and the outerArc is appended.
+          This arc has an id attribute that identifies every segment.
+
+          TODO: extreme case --> what happens when 2 segments have the
+          same name?
+          */
           d3.select(chartRef.current)
             .append('path')
             .attr("d", outerArc)
@@ -61,6 +171,14 @@ const SpiderChart = (props) => {
             .attr('id', Object.keys(formData)[j-1])            
         }
       }
+      /*
+      The <g> component is selected and a <textPath> component is appended
+      inside a <text>
+      The 'href' attribute matches the label to the corresponding segment.
+      'startOffset' and 'text-anchor' are used to center the text in the
+      invisible arc.
+      Finally, the label is entered from the data.
+      */
       d3.select(chartRef.current)
         .append('text')
         .append('textPath')
