@@ -41,7 +41,7 @@ const SpiderChart = (props) => {
         d3.select(chartRef.current)
           .append('path')
           .attr("d", arc1)
-          .attr('fill', colorArray[between(1,4)])
+          .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
       }
     }
     /* const arc2 = d3.arc()
