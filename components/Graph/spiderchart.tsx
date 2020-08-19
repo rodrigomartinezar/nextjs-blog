@@ -37,13 +37,21 @@ const SpiderChart = (props) => {
         .attr("d", arc1)
         .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
 
-        if (i == number_of_levels-1){                      
-          const outerArc = d3.arc()
-                              .innerRadius(105 + padding*i)
-                              .outerRadius(105 + padding*i)
-                              .startAngle(angle*(j-1) + padding_between_segments)
-                              .endAngle(angle*j - padding_between_segments)
-          
+        if (i == number_of_levels-1){
+          let outerArc
+          if (angle*(j-1) + padding_between_segments < Math.PI/180 * 90 || angle*(j-1) + padding_between_segments > Math.PI/180 * 260 ){
+            outerArc = d3.arc()
+                        .innerRadius(105 + padding*i)
+                        .outerRadius(105 + padding*i)
+                        .startAngle(angle*(j-1) + padding_between_segments)
+                        .endAngle(angle*j - padding_between_segments)
+          } else {
+            outerArc = d3.arc()
+                        .innerRadius(120 + padding*i)
+                        .outerRadius(120 + padding*i)
+                        .startAngle(angle*j - padding_between_segments)
+                        .endAngle(angle*(j-1) + padding_between_segments)
+          }
           d3.select(chartRef.current)
             .append('path')
             .attr("d", outerArc)
