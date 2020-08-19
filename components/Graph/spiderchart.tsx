@@ -48,7 +48,7 @@ const SpiderChart = (props) => {
       d3.select(chartRef.current)
         .append('text')
         .append('textPath')
-        .attr('href', Object.keys(formData)[j-1])
+        .attr('href', `#${Object.keys(formData)[j-1]}`)
         .text(Object.keys(formData)[j-1])
     }
   })
