@@ -6,17 +6,21 @@ const SpiderChart = (props) => {
   
   const margin = {top:20, right:20, bottom:20, left:20}
 
-  const {number_of_levels} = props
-  const number_of_segments = 11
+  const {formData} = props
+  const number_of_segments = Object.keys(formData).length
+  const number_of_levels = formData['Internet'].length
   const padding = 35
   const angle = (2*Math.PI) / number_of_segments
   const padding_between_segments = Math.PI/90
   const chartRef = useRef()
 
   const colorArray = {
+    0: '#C0C0C0',
     1: '#41D38C',
     2: '#2EAB6D',
-    3: '#6D03D7'
+    3: '#6D03D7',
+    4: '#460388',
+    5: '#28024E'
   }
 
   function between(min, max){
