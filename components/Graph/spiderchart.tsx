@@ -32,23 +32,31 @@ const SpiderChart = (props) => {
                       .startAngle(angle*(j-1) + padding_between_segments)
                       .endAngle(angle*j - padding_between_segments)
 
+        d3.select(chartRef.current)
+        .append('path')
+        .attr("d", arc1)
+        .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
+
         if (i == number_of_levels-1){                      
+          const outerArc = d3.arc()
+                              .innerRadius(100 + padding*i)
+                              .outerRadius(100 + padding*i)
+                              .startAngle(angle*(j-1) + padding_between_segments)
+                              .endAngle(angle*j - padding_between_segments)
+          
           d3.select(chartRef.current)
             .append('path')
-            .attr("d", arc1)
-            .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
-            .attr('id', Object.keys(formData)[j-1])
-        } else {
-            d3.select(chartRef.current)
-              .append('path')
-              .attr("d", arc1)
-              .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
+            .attr("d", outerArc)
+            .attr('fill', 'none')
+            .attr('id', Object.keys(formData)[j-1])            
         }
       }
       d3.select(chartRef.current)
         .append('text')
         .append('textPath')
         .attr('href', `#${Object.keys(formData)[j-1]}`)
+        .attr('startOffset', '25%')
+        .style('text-anchor', 'middle')
         .text(Object.keys(formData)[j-1])
     }
   })
