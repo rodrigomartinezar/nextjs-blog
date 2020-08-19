@@ -26,33 +26,35 @@ const SpiderChart = (props) => {
   useEffect(() => {
     for (let j = 1; j<number_of_segments+1; j++){
       for (let i = 0; i<number_of_levels; i++){
-        const arc1 = d3.arc()
+        const startAngle = angle*(j-1) + padding_between_segments
+        const endAngle = angle*j - padding_between_segments
+        const arc = d3.arc()
                       .innerRadius(50 + padding*i)
                       .outerRadius(100 + padding*i)
-                      .startAngle(angle*(j-1) + padding_between_segments)
-                      .endAngle(angle*j - padding_between_segments)
+                      .startAngle(startAngle)
+                      .endAngle(endAngle)
 
         d3.select(chartRef.current)
         .append('path')
-        .attr("d", arc1)
+        .attr("d", arc)
         .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
 
         if (i == number_of_levels-1){
           let outerArc: any
           const rightTopLimit = Math.PI/180 * 90
           const leftTopLimit = Math.PI/180 * 260
-          if (angle*(j-1) + padding_between_segments < rightTopLimit || angle*(j-1) + padding_between_segments > leftTopLimit ){
+          if (startAngle < rightTopLimit || startAngle > leftTopLimit ){
             outerArc = d3.arc()
                         .innerRadius(105 + padding*i)
                         .outerRadius(105 + padding*i)
-                        .startAngle(angle*(j-1) + padding_between_segments)
-                        .endAngle(angle*j - padding_between_segments)
+                        .startAngle(startAngle)
+                        .endAngle(endAngle)
           } else {
             outerArc = d3.arc()
                         .innerRadius(120 + padding*i)
                         .outerRadius(120 + padding*i)
-                        .startAngle(angle*j - padding_between_segments)
-                        .endAngle(angle*(j-1) + padding_between_segments)
+                        .startAngle(endAngle)
+                        .endAngle(startAngle)
           }
           d3.select(chartRef.current)
             .append('path')
