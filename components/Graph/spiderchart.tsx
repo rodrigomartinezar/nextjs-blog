@@ -39,7 +39,9 @@ const SpiderChart = (props) => {
 
         if (i == number_of_levels-1){
           let outerArc: any
-          if (angle*(j-1) + padding_between_segments < Math.PI/180 * 90 || angle*(j-1) + padding_between_segments > Math.PI/180 * 260 ){
+          const rightTopLimit = Math.PI/180 * 90
+          const leftTopLimit = Math.PI/180 * 260
+          if (angle*(j-1) + padding_between_segments < rightTopLimit || angle*(j-1) + padding_between_segments > leftTopLimit ){
             outerArc = d3.arc()
                         .innerRadius(105 + padding*i)
                         .outerRadius(105 + padding*i)
