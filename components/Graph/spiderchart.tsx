@@ -9,7 +9,7 @@ const SpiderChart = (props) => {
   const {formData} = props
   const number_of_segments = Object.keys(formData).length
   const number_of_levels = formData['Internet'].length
-  const padding = 35
+  const padding = 55
   const angle = (2*Math.PI) / number_of_segments
   const padding_between_segments = Math.PI/90
   const chartRef = useRef()
@@ -28,7 +28,7 @@ const SpiderChart = (props) => {
       for (let i = 0; i<number_of_levels; i++){
         const arc1 = d3.arc()
                       .innerRadius(50 + padding*i)
-                      .outerRadius(80 + padding*i)
+                      .outerRadius(100 + padding*i)
                       .startAngle(angle*(j-1) + padding_between_segments)
                       .endAngle(angle*j - padding_between_segments)
 
@@ -66,8 +66,8 @@ const SpiderChart = (props) => {
             ref={chartRef}
             transform={
               `translate(
-                ${(700 - (margin.left + margin.right))/2},
-                ${330})`
+                ${350},
+                ${350})`
               }
           >
           </g>
