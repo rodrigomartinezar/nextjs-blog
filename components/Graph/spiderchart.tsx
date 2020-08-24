@@ -57,6 +57,10 @@ const SpiderChart = (props) => {
     5: '#28024E'
   }
 
+  function handleArcClick(segment, level) {
+    alert(`Clicked level ${level} of ${segment}`)
+  }
+
   /*
   Here, the magic happens (i'm not entirely certain of what happens in
   this section, so it may need some refactor to make it efficient)
@@ -110,6 +114,7 @@ const SpiderChart = (props) => {
         .append('path')
         .attr("d", arc)
         .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
+        .on('click', () => handleArcClick(Object.keys(formData)[j-1], i+1))
 
         /*
         This condition is used to place the labels. In order to do this,
