@@ -25,7 +25,7 @@ const SpiderChart = (props) => {
   /*
   padding is the separation between every level on each segment
   */
-  const padding = 55
+  const padding = 50;
   /*
   angle is the result of 360° (2*Math.PI) divided by 'number_of_segments'
   The result is the number of degrees every segment must have.
@@ -57,8 +57,8 @@ const SpiderChart = (props) => {
     5: '#28024E'
   }
 
-  function handleArcClick(segment, level) {
-    alert(`Clicked level ${level} of ${segment}`)
+  function handleArcClick(segment) {
+    alert(`Clicked ${segment}`);
   }
 
   /*
@@ -96,6 +96,20 @@ const SpiderChart = (props) => {
   */
   useEffect(() => {
     for (let j = 1; j<number_of_segments+1; j++){
+      const segmentID = `segment-${j}`;
+      const segmentGroup = d3.select(chartRef.current)
+        .append('g')
+        .attr('class', segmentID)
+        .on('click', () => handleArcClick(Object.keys(formData)[j-1]))
+        .on("mouseover", function(d,i) {
+            d3.select(this)
+              .style("transform", "scale(1.1,1.1)")
+        })
+        .on("mouseleave", function(d,i) {
+          d3.select(this)
+              .style("transform", "scale(1,1)")
+        })
+
       for (let i = 0; i<number_of_levels; i++){
         const startAngle = angle*(j-1) + padding_between_segments
         const endAngle = angle*j - padding_between_segments
@@ -110,11 +124,12 @@ const SpiderChart = (props) => {
         prior generated arc is appended, filling it with the corresponding
         color
         */
-        d3.select(chartRef.current)
-        .append('path')
-        .attr("d", arc)
-        .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]])
-        .on('click', () => handleArcClick(Object.keys(formData)[j-1], i+1))
+        segmentGroup
+          .append('path')
+          .attr("d", arc)
+          .attr('stroke', '#FFF')
+          .attr('stroke-width', '2px')
+          .attr('fill', colorArray[formData[Object.keys(formData)[j-1]][i]]);
 
         /*
         This condition is used to place the labels. In order to do this,
@@ -169,7 +184,7 @@ const SpiderChart = (props) => {
           TODO: extreme case --> what happens when 2 segments have the
           same name?
           */
-          d3.select(chartRef.current)
+          segmentGroup
             .append('path')
             .attr("d", outerArc)
             .attr('fill', 'none')
@@ -184,7 +199,7 @@ const SpiderChart = (props) => {
       invisible arc.
       Finally, the label is entered from the data.
       */
-      d3.select(chartRef.current)
+      segmentGroup
         .append('text')
         .append('textPath')
         .attr('href', `#${Object.keys(formData)[j-1]}`)
@@ -201,14 +216,15 @@ const SpiderChart = (props) => {
         style={{textAlign:'center'}}
       >
         <svg
-          height={700} width={700}
+          height={800} width={800}
         >
           <g
             ref={chartRef}
+            height={800} width={800}
             transform={
               `translate(
-                ${350},
-                ${350})`
+                ${400},
+                ${400})`
               }
           >
           </g>
