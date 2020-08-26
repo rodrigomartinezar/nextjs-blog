@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import * as d3 from 'd3'
-import ModalComponent from './modal'
+import ModalGenerator from './modal'
 
 
 const SpiderChart = (props) => {
@@ -58,9 +58,9 @@ const SpiderChart = (props) => {
     5: '#28024E'
   }
 
-  function handleArcClick(segment) {
+  function handleArcClick(segmentName, levelsData) {
     //alert(`Clicked ${segment}`);
-    ModalComponent(segment);
+    ModalGenerator(segmentName, levelsData);
   }
 
   /*
@@ -103,7 +103,7 @@ const SpiderChart = (props) => {
       const segmentGroup = d3.select(chartRef.current)
         .append('g')
         .attr('class', segmentID)
-        .on('click', () => handleArcClick(segmentName))
+        .on('click', () => handleArcClick(segmentName, formData[segmentName]))
         .on("mouseover", function(d,i) {
             d3.select(this)
               .style("transform", "scale(1.1,1.1)")
