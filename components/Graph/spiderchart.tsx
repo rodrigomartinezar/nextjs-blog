@@ -98,11 +98,12 @@ const SpiderChart = (props) => {
   */
   useEffect(() => {
     for (let j = 1; j<number_of_segments+1; j++){
+      const segmentName = Object.keys(formData)[j-1];
       const segmentID = `segment-${j}`;
       const segmentGroup = d3.select(chartRef.current)
         .append('g')
         .attr('class', segmentID)
-        .on('click', () => handleArcClick(Object.keys(formData)[j-1]))
+        .on('click', () => handleArcClick(segmentName))
         .on("mouseover", function(d,i) {
             d3.select(this)
               .style("transform", "scale(1.1,1.1)")
