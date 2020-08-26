@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import * as d3 from 'd3'
+import ModalComponent from './modal'
 
 
 const SpiderChart = (props) => {
@@ -58,7 +59,8 @@ const SpiderChart = (props) => {
   }
 
   function handleArcClick(segment) {
-    alert(`Clicked ${segment}`);
+    //alert(`Clicked ${segment}`);
+    ModalComponent(segment);
   }
 
   /*
